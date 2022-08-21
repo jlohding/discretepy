@@ -5,10 +5,11 @@ if __name__ == "__main__":
     '''
 
     tt = TruthTable("P", "Q")
-
     sb = StatementBuilder()
     not_Q = sb.get_statement("NOT", params=["Q"]) # not Q 
+
     P_or_Q = sb.get_statement("IDENTITY", "OR", "IDENTITY", params=[["P"], ["Q"]]) # P OR Q
+
     PorQ_and_notQ = sb.get_statement(P_or_Q, "AND", not_Q, params=[
                                                                 [["P"], ["Q"]],
                                                                 ["Q"],

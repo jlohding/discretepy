@@ -9,7 +9,6 @@ class TruthTable:
             *args of discrete statements, ex: *["P", "Q", "R"]
         '''
         self.statements = statements
-        self.reference_columns = {s:v for s,v in zip(statements, range(len(statements)))}
         self.df = pd.DataFrame(self.__get_combinations(), columns=self.statements)
 
     def get_truth_table(self) -> pd.DataFrame:
@@ -50,8 +49,8 @@ class TruthTable:
             if level > max_level:
                 branches.append(branch)
             else:
-                traverse(branch + [False], level+1)
                 traverse(branch + [True], level+1)
+                traverse(branch + [False], level+1)
         traverse([], 1)
         return branches
 
