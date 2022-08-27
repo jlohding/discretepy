@@ -95,4 +95,4 @@ class TestTruthTable(unittest.TestCase):
         tt.add_statement(statement)
 
         table = tt.get_truth_table()
-        self.assertEquals(table.shape, (32,6)) # table shape should be (2^5, 5+1)
+        self.assertEqual(table.shape, (32,6)) # table shape should be (2^5, 5+1)

@@ -38,8 +38,6 @@ class TruthTable:
     def __get_combinations(self) -> list:
         '''Recursively generates all (2^n) possible combinations from n independent statements
 
-        surely there is a more efficient way...
-
         return: list
             nested list of booleans
         '''
@@ -153,10 +151,19 @@ class LogicalConnective:
         '''
         self.f = func
         self.params = params
-        self.name_function = name_function # f: *args -> string
+        self.name_function = name_function # f: *args -> striig
+        self.isNegated = False # negation status
+
+    def negate(self) -> 'LogicalConnective':
+        # toggles negation mode via DeMorgan's Laws
+        self.isNegated = not self.isNegated
+        return self
 
     def get_name_function(self) -> 'function':
-        return self.name_function
+        if self.isNegated:
+            return lambda left, right: self.name_function(f"NOT {left}", f"NOT {right}") 
+        else:
+            return self.name_function
 
     def get_name(self) -> str:
         return self.get_name_function()(*self.params)        
@@ -169,4 +176,7 @@ class LogicalConnective:
         return self.params
 
     def compute(self, *args) -> bool:
-        return self.f(*args)
+        if self.isNegated:
+            return not self.f(*args)
+        else:
+            return self.f(*args)
